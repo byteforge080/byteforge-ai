@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ByteForge AI Prompt Generator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#040814;
+color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+.background{
+position:fixed;
+width:600px;
+height:600px;
+background:#2563eb;
+filter:blur(180px);
+opacity:0.25;
+top:-200px;
+right:-200px;
+z-index:-1;
+}
+
+.container{
+width:90%;
+max-width:650px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(12px);
+padding:45px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(37,99,235,0.3);
+text-align:center;
+}
+
+.container h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.container p{
+color:#cbd5e1;
+margin-bottom:30px;
+line-height:1.8;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+margin-top:15px;
+}
+
+button:hover{
+transform:translateY(-4px);
+}
+
+.prompt-box{
+margin-top:30px;
+background:#111827;
+padding:25px;
+border-radius:18px;
+min-height:180px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+#prompt{
+font-size:20px;
+line-height:1.8;
+color:#60a5fa;
+}
+
+.copy-btn{
+background:#0f172a;
+}
+
+.back-btn{
+background:transparent;
+border:1px solid #60a5fa;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<h1>✨ AI Prompt Generator</h1>
+
+<p>
+Generate futuristic prompts for AI art, websites,
+robotics, coding, startups and creative projects.
+</p>
+
+<button onclick="generatePrompt()">
+Generate AI Prompt
+</button>
+
+<div class="prompt-box">
+
+<p id="prompt">
+Click the button to generate futuristic AI prompts
+</p>
+
+</div>
+
+<button class="copy-btn" onclick="copyPrompt()">
+Copy Prompt
+</button>
+
+<button class="back-btn" onclick="goBack()">
+⬅ Back To Dashboard
+</button>
+
+</div>
+
+<script>
+
+const prompts = [
+
+"Create a futuristic cyberpunk city with neon lights and flying cars.",
+
+"Design a luxury AI startup dashboard with glassmorphism UI.",
+
+"Generate a galaxy-themed developer portfolio website.",
+
+"Create a robotic AI assistant interface for smart homes.",
+
+"Build a futuristic gaming room with holographic displays.",
+
+"Design a modern fintech mobile app with dark futuristic theme.",
+
+"Generate an advanced space station interior with cinematic lighting.",
+
+"Create a futuristic AI chatbot landing page with animations.",
+
+"Build a luxury smartwatch UI for future technology brands.",
+
+"Generate a modern AI-generated fashion concept with neon aesthetics."
+
+];
+
+function generatePrompt(){
+
+let random =
+Math.floor(Math.random() * prompts.length);
+
+document.getElementById("prompt").innerText =
+prompts[random];
+
+}
+
+function copyPrompt(){
+
+let prompt =
+document.getElementById("prompt").innerText;
+
+navigator.clipboard.writeText(prompt);
+
+alert("Prompt Copied");
+
+}
+
+function goBack(){
+
+window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>

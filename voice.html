@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ByteForge Voice Assistant</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#040814;
+color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+padding:20px;
+}
+
+.background{
+position:fixed;
+width:700px;
+height:700px;
+background:#2563eb;
+filter:blur(200px);
+opacity:0.25;
+top:-250px;
+right:-250px;
+z-index:-1;
+}
+
+.container{
+width:100%;
+max-width:850px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(14px);
+padding:45px;
+border-radius:30px;
+text-align:center;
+box-shadow:0 0 50px rgba(37,99,235,0.3);
+}
+
+.container h1{
+font-size:50px;
+margin-bottom:15px;
+}
+
+.container p{
+color:#cbd5e1;
+line-height:1.8;
+margin-bottom:35px;
+}
+
+.voice-circle{
+width:180px;
+height:180px;
+margin:auto;
+border-radius:50%;
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:70px;
+animation:pulse 2s infinite;
+box-shadow:0 0 40px rgba(37,99,235,0.5);
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+.status-box{
+margin-top:35px;
+background:#111827;
+padding:25px;
+border-radius:20px;
+min-height:180px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.status-box h3{
+color:#60a5fa;
+margin-bottom:15px;
+font-size:24px;
+}
+
+#voiceResult{
+font-size:20px;
+line-height:1.8;
+max-width:600px;
+}
+
+.button-group{
+display:flex;
+gap:20px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+button{
+flex:1;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+min-width:220px;
+}
+
+button:hover{
+transform:translateY(-4px);
+}
+
+.stop-btn{
+background:#dc2626;
+}
+
+.back-btn{
+background:transparent;
+border:1px solid #60a5fa;
+}
+
+.command-list{
+margin-top:35px;
+text-align:left;
+background:#111827;
+padding:25px;
+border-radius:20px;
+}
+
+.command-list h3{
+margin-bottom:15px;
+color:#60a5fa;
+}
+
+.command-list ul{
+padding-left:20px;
+line-height:2;
+color:#cbd5e1;
+}
+
+@media(max-width:700px){
+
+.container h1{
+font-size:38px;
+}
+
+.voice-circle{
+width:140px;
+height:140px;
+font-size:55px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<h1>🎤 Voice Assistant</h1>
+
+<p>
+Talk with the futuristic ByteForge AI Voice Assistant
+using speech recognition and smart commands.
+</p>
+
+<div class="voice-circle">
+🎙
+</div>
+
+<div class="button-group">
+
+<button onclick="startVoiceAssistant()">
+Start Listening
+</button>
+
+<button class="stop-btn" onclick="stopVoiceAssistant()">
+Stop Listening
+</button>
+
+<button class="back-btn" onclick="goBack()">
+⬅ Dashboard
+</button>
+
+</div>
+
+<div class="status-box">
+
+<h3>Assistant Response</h3>
+
+<p id="voiceResult">
+Waiting for voice command...
+</p>
+
+</div>
+
+<div class="command-list">
+
+<h3>Example Commands</h3>
+
+<ul>
+<li>Open dashboard</li>
+<li>Generate password</li>
+<li>Open AI image generator</li>
+<li>Hello ByteForge</li>
+<li>What can you do?</li>
+<li>Open resume builder</li>
+</ul>
+
+</div>
+
+</div>
+
+<script>
+
+let recognition;
+
+function startVoiceAssistant(){
+
+if(!('webkitSpeechRecognition' in window)){
+
+alert("Speech Recognition not supported in this browser");
+
+return;
+
+}
+
+recognition = new webkitSpeechRecognition();
+
+recognition.continuous = true;
+
+recognition.interimResults = false;
+
+recognition.lang = "en-US";
+
+document.getElementById("voiceResult")
+.innerText =
+"Listening... Speak now.";
+
+recognition.onresult = function(event){
+
+let transcript =
+event.results[event.results.length - 1][0].transcript.toLowerCase();
+
+handleCommand(transcript);
+
+};
+
+recognition.start();
+
+}
+
+function handleCommand(command){
+
+let response = "";
+
+if(command.includes("hello")){
+
+response = "Hello! Welcome to ByteForge AI.";
+
+}
+
+else if(command.includes("what can you do")){
+
+response =
+"I can open AI tools, generate responses and assist your futuristic dashboard.";
+
+}
+
+else if(command.includes("open dashboard")){
+
+response = "Opening Dashboard";
+
+window.location.href = "index.html";
+
+}
+
+else if(command.includes("generate password")){
+
+response = "Opening Password Generator";
+
+window.location.href = "password.html";
+
+}
+
+else if(command.includes("resume")){
+
+response = "Opening Resume Builder";
+
+window.location.href = "resume.html";
+
+}
+
+else if(command.includes("image")){
+
+response = "Opening AI Image Generator";
+
+window.location.href = "image.html";
+
+}
+
+else{
+
+response =
+"You said: " + command;
+
+}
+
+document.getElementById("voiceResult")
+.innerText = response;
+
+speak(response);
+
+}
+
+function speak(text){
+
+let speech =
+new SpeechSynthesisUtterance(text);
+
+speech.lang = "en-US";
+
+speech.rate = 1;
+
+speech.pitch = 1;
+
+window.speechSynthesis.speak(speech);
+
+}
+
+function stopVoiceAssistant(){
+
+if(recognition){
+
+recognition.stop();
+
+document.getElementById("voiceResult")
+.innerText =
+"Voice Assistant Stopped.";
+
+}
+
+}
+
+function goBack(){
+
+window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>

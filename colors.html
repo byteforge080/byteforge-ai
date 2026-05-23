@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ByteForge Color Palette Generator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#040814;
+color:white;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+overflow:hidden;
+}
+
+.background{
+position:fixed;
+width:600px;
+height:600px;
+background:#2563eb;
+filter:blur(180px);
+opacity:0.25;
+top:-200px;
+right:-200px;
+z-index:-1;
+}
+
+.container{
+width:100%;
+max-width:900px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(12px);
+padding:45px;
+border-radius:28px;
+box-shadow:0 0 40px rgba(37,99,235,0.3);
+text-align:center;
+}
+
+.container h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.container p{
+color:#cbd5e1;
+line-height:1.8;
+margin-bottom:35px;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+margin-top:15px;
+}
+
+button:hover{
+transform:translateY(-4px);
+}
+
+.palette{
+margin-top:35px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+gap:20px;
+}
+
+.color-card{
+height:180px;
+border-radius:22px;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+padding-bottom:15px;
+font-weight:600;
+font-size:18px;
+transition:0.3s;
+cursor:pointer;
+border:2px solid rgba(255,255,255,0.1);
+}
+
+.color-card:hover{
+transform:scale(1.05);
+}
+
+.back-btn{
+background:transparent;
+border:1px solid #60a5fa;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<h1>🎨 Color Palette Generator</h1>
+
+<p>
+Generate futuristic modern color palettes for websites,
+dashboards, startups and creative UI designs.
+</p>
+
+<button onclick="generatePalette()">
+Generate Color Palette
+</button>
+
+<div class="palette" id="palette">
+
+<div class="color-card" style="background:#2563eb;">
+#2563EB
+</div>
+
+<div class="color-card" style="background:#7c3aed;">
+#7C3AED
+</div>
+
+<div class="color-card" style="background:#06b6d4;">
+#06B6D4
+</div>
+
+<div class="color-card" style="background:#0f172a;">
+#0F172A
+</div>
+
+<div class="color-card" style="background:#f43f5e;">
+#F43F5E
+</div>
+
+</div>
+
+<button class="back-btn" onclick="goBack()">
+⬅ Back To Dashboard
+</button>
+
+</div>
+
+<script>
+
+function randomColor(){
+
+let letters = "0123456789ABCDEF";
+
+let color = "#";
+
+for(let i=0;i<6;i++){
+
+color += letters[Math.floor(Math.random()*16)];
+
+}
+
+return color;
+
+}
+
+function generatePalette(){
+
+let palette =
+document.getElementById("palette");
+
+palette.innerHTML = "";
+
+for(let i=0;i<5;i++){
+
+let color = randomColor();
+
+let card =
+document.createElement("div");
+
+card.classList.add("color-card");
+
+card.style.background = color;
+
+card.innerText = color;
+
+card.onclick = function(){
+
+navigator.clipboard.writeText(color);
+
+alert(color + " Copied");
+
+};
+
+palette.appendChild(card);
+
+}
+
+}
+
+function goBack(){
+
+window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ByteForge Advanced Resume Builder</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#040814;
+color:white;
+overflow-x:hidden;
+padding:40px;
+}
+
+.background{
+position:fixed;
+width:700px;
+height:700px;
+background:#2563eb;
+filter:blur(200px);
+opacity:0.2;
+top:-250px;
+right:-250px;
+z-index:-1;
+}
+
+.container{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+max-width:1500px;
+margin:auto;
+}
+
+.form-box,
+.resume-preview{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(12px);
+border-radius:28px;
+padding:35px;
+}
+
+h1{
+font-size:45px;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#cbd5e1;
+margin-bottom:35px;
+line-height:1.8;
+}
+
+.section-title{
+margin-top:30px;
+margin-bottom:15px;
+font-size:24px;
+color:#60a5fa;
+}
+
+input,
+textarea,
+select{
+width:100%;
+padding:15px;
+margin-top:14px;
+border:none;
+border-radius:14px;
+background:#111827;
+color:white;
+font-size:15px;
+outline:none;
+}
+
+textarea{
+min-height:110px;
+resize:none;
+}
+
+button{
+width:100%;
+padding:16px;
+margin-top:20px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:translateY(-4px);
+}
+
+.secondary-btn{
+background:transparent;
+border:1px solid #60a5fa;
+}
+
+.resume-preview{
+position:sticky;
+top:20px;
+height:fit-content;
+}
+
+.resume-paper{
+background:white;
+color:black;
+padding:45px;
+border-radius:18px;
+min-height:900px;
+}
+
+.resume-paper h2{
+font-size:40px;
+margin-bottom:8px;
+}
+
+.resume-paper h3{
+margin-top:30px;
+margin-bottom:10px;
+color:#2563eb;
+}
+
+.resume-paper p,
+.resume-paper li{
+line-height:1.8;
+}
+
+.resume-paper ul{
+padding-left:20px;
+}
+
+.top-info{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:25px;
+}
+
+.skill-tag{
+display:inline-block;
+padding:8px 14px;
+background:#dbeafe;
+color:#1d4ed8;
+border-radius:30px;
+margin:6px;
+font-size:14px;
+font-weight:600;
+}
+
+@media(max-width:1100px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<div class="form-box">
+
+<h1>📝 Resume Builder</h1>
+
+<p class="subtitle">
+Create a futuristic professional resume with live preview and PDF download.
+</p>
+
+<h2 class="section-title">Personal Information</h2>
+
+<input type="text" id="fullName" placeholder="Full Name">
+
+<input type="text" id="jobTitle" placeholder="Job Title">
+
+<input type="email" id="email" placeholder="Email Address">
+
+<input type="text" id="phone" placeholder="Phone Number">
+
+<input type="text" id="location" placeholder="Location">
+
+<textarea id="summary" placeholder="Professional Summary"></textarea>
+
+<h2 class="section-title">Skills</h2>
+
+<input type="text" id="skills" placeholder="HTML, CSS, JavaScript, React">
+
+<h2 class="section-title">Education</h2>
+
+<input type="text" id="education" placeholder="Bachelor in Computer Science">
+
+<h2 class="section-title">Experience</h2>
+
+<textarea id="experience" placeholder="Write your work experience"></textarea>
+
+<h2 class="section-title">Projects</h2>
+
+<textarea id="projects" placeholder="Describe your projects"></textarea>
+
+<button onclick="generateResume()">
+Generate Resume
+</button>
+
+<button onclick="downloadPDF()">
+Download PDF
+</button>
+
+<button class="secondary-btn" onclick="goBack()">
+⬅ Back To Dashboard
+</button>
+
+</div>
+
+<div class="resume-preview">
+
+<div class="resume-paper" id="resumeContent">
+
+<h2>Your Name</h2>
+
+<div class="top-info">
+<p>Email</p>
+<p>Phone</p>
+<p>Location</p>
+</div>
+
+<p>
+Your professional summary will appear here.
+</p>
+
+<h3>Skills</h3>
+
+<div>
+<span class="skill-tag">HTML</span>
+<span class="skill-tag">CSS</span>
+</div>
+
+<h3>Education</h3>
+
+<p>Your education details</p>
+
+<h3>Experience</h3>
+
+<p>Your experience details</p>
+
+<h3>Projects</h3>
+
+<p>Your project details</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function generateResume(){
+
+let name =
+document.getElementById("fullName").value;
+
+let title =
+document.getElementById("jobTitle").value;
+
+let email =
+document.getElementById("email").value;
+
+let phone =
+document.getElementById("phone").value;
+
+let location =
+document.getElementById("location").value;
+
+let summary =
+document.getElementById("summary").value;
+
+let skills =
+document.getElementById("skills").value.split(",");
+
+let education =
+document.getElementById("education").value;
+
+let experience =
+document.getElementById("experience").value;
+
+let projects =
+document.getElementById("projects").value;
+
+let skillHTML = "";
+
+skills.forEach(skill => {
+
+skillHTML += `
+<span class="skill-tag">
+${skill.trim()}
+</span>
+`;
+
+});
+
+document.getElementById("resumeContent").innerHTML = `
+
+<h2>${name}</h2>
+
+<p style="font-size:18px;color:#2563eb;margin-bottom:15px;">
+${title}
+</p>
+
+<div class="top-info">
+<p>${email}</p>
+<p>${phone}</p>
+<p>${location}</p>
+</div>
+
+<h3>Professional Summary</h3>
+
+<p>${summary}</p>
+
+<h3>Skills</h3>
+
+<div>
+${skillHTML}
+</div>
+
+<h3>Education</h3>
+
+<p>${education}</p>
+
+<h3>Experience</h3>
+
+<p>${experience}</p>
+
+<h3>Projects</h3>
+
+<p>${projects}</p>
+
+`;
+
+}
+
+async function downloadPDF(){
+
+const { jsPDF } = window.jspdf;
+
+const doc = new jsPDF("p","pt","a4");
+
+let text =
+document.getElementById("resumeContent").innerText;
+
+let lines =
+doc.splitTextToSize(text,500);
+
+doc.text(lines,40,40);
+
+doc.save("ByteForge_Resume.pdf");
+
+}
+
+function goBack(){
+
+window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>

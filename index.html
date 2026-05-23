@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ByteForge AI Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#040814;
+color:white;
+overflow-x:hidden;
+}
+
+.background{
+position:fixed;
+width:600px;
+height:600px;
+background:#2563eb;
+filter:blur(180px);
+opacity:0.25;
+top:-200px;
+right:-200px;
+z-index:-1;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 8%;
+position:sticky;
+top:0;
+background:rgba(4,8,20,0.7);
+backdrop-filter:blur(10px);
+z-index:100;
+}
+
+.logo{
+font-size:32px;
+font-weight:700;
+color:#60a5fa;
+}
+
+nav a{
+text-decoration:none;
+color:white;
+margin-left:20px;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#60a5fa;
+}
+
+.hero{
+min-height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:70px;
+max-width:900px;
+line-height:1.1;
+}
+
+.hero h1 span{
+color:#60a5fa;
+}
+
+.hero p{
+margin-top:20px;
+font-size:18px;
+max-width:700px;
+line-height:1.8;
+color:#cbd5e1;
+}
+
+.hero button{
+margin-top:35px;
+padding:16px 35px;
+border:none;
+border-radius:14px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.hero button:hover{
+transform:translateY(-5px);
+}
+
+.section{
+padding:100px 8%;
+}
+
+.section-title{
+text-align:center;
+font-size:50px;
+margin-bottom:60px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(12px);
+padding:35px;
+border-radius:25px;
+transition:0.4s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-10px);
+border-color:#60a5fa;
+}
+
+.card h3{
+font-size:26px;
+margin-bottom:15px;
+}
+
+.card p{
+color:#cbd5e1;
+line-height:1.7;
+}
+
+.analytics{
+text-align:center;
+}
+
+.analytics h1{
+font-size:60px;
+color:#60a5fa;
+margin-top:15px;
+}
+
+.about-box{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+padding:40px;
+border-radius:25px;
+max-width:900px;
+margin:auto;
+text-align:center;
+line-height:1.9;
+}
+
+.about-box a{
+color:#60a5fa;
+text-decoration:none;
+}
+
+footer{
+padding:40px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,0.1);
+margin-top:50px;
+}
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:45px;
+}
+
+nav{
+display:none;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header>
+
+<div class="logo">ByteForge AI</div>
+
+<nav>
+<a href="#tools">Tools</a>
+<a href="#dashboard">Dashboard</a>
+<a href="#about">About</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>
+Future Powered <span>AI Dashboard</span>
+</h1>
+
+<p>
+Modern futuristic AI ecosystem created by ByteForge.
+Click any tool card to open its dedicated AI tool page.
+</p>
+
+<button onclick="scrollToTools()">
+Explore AI Tools
+</button>
+
+</section>
+
+<section class="section" id="tools">
+
+<h2 class="section-title">
+AI Tools
+</h2>
+
+<div class="grid">
+
+<div class="card" onclick="openPasswordPage()">
+<h3>🔐 Password Generator</h3>
+<p>
+Generate powerful secure passwords instantly using AI dashboard.
+</p>
+</div>
+
+<div class="card" onclick="openPromptPage()">
+<h3>✨ AI Prompt Generator</h3>
+<p>
+Create futuristic prompts for AI art, coding and content.
+</p>
+</div>
+
+<div class="card" onclick="openColorPage()">
+<h3>🎨 Color Palette Generator</h3>
+<p>
+Generate modern futuristic UI color combinations instantly.
+</p>
+</div>
+
+<div class="card" onclick="openResumePage()">
+<h3>📝 Resume Builder</h3>
+<p>
+Create professional resumes and download them as PDF.
+</p>
+</div>
+
+<div class="card" onclick="openVoicePage()">
+<h3>🎤 Voice Assistant</h3>
+<p>
+Use speech recognition and futuristic voice interactions.
+</p>
+</div>
+
+<div class="card" onclick="openImagePage()">
+<h3>🖼 AI Image Generator</h3>
+<p>
+Generate futuristic AI images using creative prompts.
+</p>
+</div>
+
+<div class="card" onclick="openCertificatePage()">
+<h3>🏆 Get Certificate</h3>
+<p>
+Open the certificate portal website and generate certificates.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section" id="dashboard">
+
+<h2 class="section-title">
+Dashboard Analytics
+</h2>
+
+<div class="grid">
+
+<div class="card analytics">
+<h3>Total Users</h3>
+<h1>12K+</h1>
+<p>Active futuristic platform users.</p>
+</div>
+
+<div class="card analytics">
+<h3>AI Generations</h3>
+<h1>89K+</h1>
+<p>Generated prompts and AI outputs.</p>
+</div>
+
+<div class="card analytics">
+<h3>Projects Created</h3>
+<h1>3.4K+</h1>
+<p>Websites and futuristic designs built.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section" id="about">
+
+<h2 class="section-title">
+About ByteForge
+</h2>
+
+<div class="about-box">
+
+<p>
+ByteForge AI is a futuristic web platform focused on
+modern AI tools, startup-level dashboards,
+creative automation and advanced developer experiences.
+</p>
+
+<br>
+
+<p>
+Main Website:
+</p>
+
+<br>
+
+<a href="https://byteforge080.github.io/" target="_blank">
+www.ByteForge.github
+</a>
+
+</div>
+
+</section>
+
+<footer>
+
+<h2>
+ByteForge AI © 2026
+</h2>
+
+<p style="margin-top:10px;">
+Forge The Future Together.
+</p>
+
+</footer>
+
+<script>
+
+function scrollToTools(){
+
+document.getElementById("tools")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+function openPasswordPage(){
+
+window.open("password.html","_blank");
+
+}
+
+function openPromptPage(){
+
+window.open("prompt.html","_blank");
+
+}
+
+function openColorPage(){
+
+window.open("colors.html","_blank");
+
+}
+
+function openResumePage(){
+
+window.open("resume.html","_blank");
+
+}
+
+function openVoicePage(){
+
+window.open("voice.html","_blank");
+
+}
+
+function openImagePage(){
+
+window.open("image.html","_blank");
+
+}
+
+function openCertificatePage(){
+
+window.open("certificate.html","_blank");
+
+}
+
+</script>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+updateDoc,
+increment
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDXvMefLHgf3Gi_5ld-wPMiYzTndTB96ng",
+  authDomain: "byteforge-ai.firebaseapp.com",
+  projectId: "byteforge-ai",
+  storageBucket: "byteforge-ai.firebasestorage.app",
+  messagingSenderId: "724553759435",
+  appId: "1:724553759435:web:49d588a0c665abd778394e",
+  measurementId: "G-H0HEGDPZCG"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+</script>
+</body>
+</html>
