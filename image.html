@@ -333,6 +333,21 @@ window.location.href = "index.html";
 }
 
 </script>
+<script type="module">
 
+import {
+generateAI,
+loadStats,
+trackUser
+}
+from "./firebase.js";
+
+trackUser();
+
+loadStats();
+
+window.generateAI = generateAI;
+
+</script>
 </body>
 </html>
