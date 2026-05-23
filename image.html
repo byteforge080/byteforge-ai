@@ -176,6 +176,17 @@ font-size:40px;
 
 }
 
+.img-loader{
+
+height:320px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#111827;
+color:#60a5fa;
+font-size:22px;
+
+}
 </style>
 </head>
 
@@ -262,8 +273,9 @@ document.getElementById("prompt").value = text;
 
 }
 
-function generateImage(){
-    generateAI();
+async function generateImage(){
+
+await generateAI();
 
 let prompt =
 document.getElementById("prompt").value;
@@ -271,7 +283,7 @@ document.getElementById("prompt").value;
 let style =
 document.getElementById("style").value;
 
-if(prompt === ""){
+if(prompt.trim() === ""){
 
 alert("Please enter image prompt");
 
@@ -279,20 +291,19 @@ return;
 
 }
 
-document.getElementById("loading").style.display = "block";
+let loading =
+document.getElementById("loading");
+
+loading.style.display = "block";
 
 let finalPrompt =
-prompt + " " + style + " ultra detailed futuristic art";
+prompt + " " + style + " ultra detailed cinematic futuristic artwork";
+
+let randomSeed =
+Math.floor(Math.random()*999999);
 
 let imageURL =
-"https://image.pollinations.ai/prompt/" +
-encodeURIComponent(finalPrompt) +
-"?width=1024&height=1024&seed=" +
-Math.floor(Math.random()*100000);
-
-setTimeout(() => {
-
-document.getElementById("loading").style.display = "none";
+`https://image.pollinations.ai/prompt/${encodeURIComponent(finalPrompt)}?seed=${randomSeed}&width=1024&height=1024&nologo=true`;
 
 let gallery =
 document.getElementById("gallery");
@@ -300,21 +311,23 @@ document.getElementById("gallery");
 let card =
 document.createElement("div");
 
-card.classList.add("image-card");
+card.className = "image-card";
 
 card.innerHTML = `
 
-<img 
-src="${imageURL}" 
+<div class="img-loader">
+Generating...
+</div>
+
+<img
+style="display:none"
+src="${imageURL}"
 alt="AI Image"
-onerror="this.src='https://placehold.co/600x400/111827/FFFFFF?text=Image+Generation+Failed'"
 >
 
 <div class="image-info">
 
-<p>
-${finalPrompt}
-</p>
+<p>${finalPrompt}</p>
 
 </div>
 
@@ -322,7 +335,30 @@ ${finalPrompt}
 
 gallery.prepend(card);
 
-},1500);
+let img =
+card.querySelector("img");
+
+let loader =
+card.querySelector(".img-loader");
+
+img.onload = function(){
+
+loader.style.display = "none";
+
+img.style.display = "block";
+
+loading.style.display = "none";
+
+};
+
+img.onerror = function(){
+
+loader.innerHTML =
+"❌ Image API Failed. Try another prompt.";
+
+loading.style.display = "none";
+
+};
 
 }
 
